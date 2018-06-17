@@ -114,18 +114,10 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         // Dispose of any resources that can be recreated.
     }
     
-//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, borderDefaultColorFor date: Date) -> UIColor? {
-//
-//        return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.gray
-//
-//    }
     
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, selectionColorFor date: Date) -> UIColor? {
-        return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.gray
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.white
     }
-    
-    
-    ////
     
     
     // MARK:- UITableViewDataSource
@@ -152,18 +144,18 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     
     // MARK:- UITableViewDelegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 0 {
-            let scope: FSCalendarScope = (indexPath.row == 0) ? .month : .week
-            //self.calendar.setScope(scope, animated: self.animationSwitch.isOn)
-            self.calendar.setScope(scope, animated: true)
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        if indexPath.section == 0 {
+//            let scope: FSCalendarScope = (indexPath.row == 0) ? .month : .week
+//            //self.calendar.setScope(scope, animated: self.animationSwitch.isOn)
+//            self.calendar.setScope(scope, animated: true)
+//        }
+//    }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 10
+//    }
     
     // MARK:- Target actions
     
