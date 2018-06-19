@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		46183A1CF8DAC754E4947C9C /* Pods_ClassPlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2910E77907010E40D9A82C98 /* Pods_ClassPlus.framework */; };
+		DC4EFF0820D948B200B62CD5 /* TableViewCellOfData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4EFF0720D948B200B62CD5 /* TableViewCellOfData.swift */; };
 		DCEB28BA20D69940004D8C7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB28B920D69940004D8C7E /* AppDelegate.swift */; };
 		DCEB28BC20D69940004D8C7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB28BB20D69940004D8C7E /* ViewController.swift */; };
 		DCEB28BF20D69940004D8C7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCEB28BD20D69940004D8C7E /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		2910E77907010E40D9A82C98 /* Pods_ClassPlus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClassPlus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CB37A905EAE7020E69B42D0 /* Pods-ClassPlus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassPlus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClassPlus/Pods-ClassPlus.debug.xcconfig"; sourceTree = "<group>"; };
 		984BEF28A08986379C0E76A3 /* Pods-ClassPlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassPlus.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClassPlus/Pods-ClassPlus.release.xcconfig"; sourceTree = "<group>"; };
+		DC4EFF0720D948B200B62CD5 /* TableViewCellOfData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellOfData.swift; sourceTree = "<group>"; };
 		DCEB28B620D69940004D8C7E /* ClassPlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassPlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCEB28B920D69940004D8C7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCEB28BB20D69940004D8C7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				DCEB28B920D69940004D8C7E /* AppDelegate.swift */,
 				DCEB28BB20D69940004D8C7E /* ViewController.swift */,
 				DCEB28BD20D69940004D8C7E /* Main.storyboard */,
+				DC4EFF0720D948B200B62CD5 /* TableViewCellOfData.swift */,
 				DCEB28C320D69942004D8C7E /* Assets.xcassets */,
 				DCEB28C520D69942004D8C7E /* LaunchScreen.storyboard */,
 				DCEB28C820D69942004D8C7E /* Info.plist */,
@@ -207,6 +210,7 @@
 			files = (
 				DCEB28BC20D69940004D8C7E /* ViewController.swift in Sources */,
 				DCEB28BA20D69940004D8C7E /* AppDelegate.swift in Sources */,
+				DC4EFF0820D948B200B62CD5 /* TableViewCellOfData.swift in Sources */,
 				DCEB28C220D69940004D8C7E /* ClassPlus.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

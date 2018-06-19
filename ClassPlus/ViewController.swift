@@ -18,7 +18,6 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     @IBOutlet weak var calendarHeightConstraint : NSLayoutConstraint?
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
-    //   @IBOutlet weak var toggle: UIButton!
     
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -43,8 +42,8 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         //let calendar = FSCalendar(frame: CGRect(x: 5, y: 30, width: view.frame.width-5, height: 100))
         calendar.dataSource = self
         calendar.delegate = self
-     //   tableView.delegate = self
-       // tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         //calendar.scope = FSCalendarScope.week
         //view.addSubview(calendar)
         //self.calendar = calendar
@@ -137,23 +136,28 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     
     // MARK:- UITableViewDataSource
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 2
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return [2,20][section]
+        return 15
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let identifier = ["cell_month", "cell_week"][indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier)!
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-            return cell
-        }
+//        if indexPath.section == 0 {
+//            let identifier = ["cell_month", "cell_week"][indexPath.row]
+//            let cell = tableView.dequeueReusableCell(withIdentifier: identifier)!
+//            return cell
+//        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+//            return cell
+//        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCellOfData
+        return cell
+        
+        
     }
     
     
