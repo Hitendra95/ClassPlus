@@ -74,6 +74,13 @@
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstStudentImage" destination="ktN-1d-cqY" id="S5c-TC-xgg"/>
+                                            <outlet property="secondStudentImage" destination="mnf-le-y63" id="5hk-f0-m0j"/>
+                                            <outlet property="subjectName" destination="KaG-pU-swf" id="JwZ-l9-iCP"/>
+                                            <outlet property="thirdStudentImage" destination="0tE-gh-hcz" id="zdn-40-oy8"/>
+                                            <outlet property="totalNumberOfClassCompleted" destination="hEJ-Rt-cff" id="Nw6-TX-2gU"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

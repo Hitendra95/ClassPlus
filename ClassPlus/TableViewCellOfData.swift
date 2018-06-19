@@ -10,6 +10,13 @@ import UIKit
 
 class TableViewCellOfData: UITableViewCell {
 
+    @IBOutlet weak var subjectName: UILabel!
+    
+    @IBOutlet weak var totalNumberOfClassCompleted: UILabel!
+    
+    @IBOutlet weak var firstStudentImage: UIImageView!
+    @IBOutlet weak var secondStudentImage: UIImageView!
+    @IBOutlet weak var thirdStudentImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
