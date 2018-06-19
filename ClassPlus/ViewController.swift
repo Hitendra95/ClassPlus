@@ -14,11 +14,11 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     
 //fileprivate weak var calendar: FSCalendar!
 
+    let daysName = [1:"Sun",2:"Mon",3:"Tue",4:"Wed",5:"Thu",6:"Fri",7:"Sat"]
     @IBOutlet weak var calendarHeightConstraint : NSLayoutConstraint?
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var toggle: UIButton!
+    //   @IBOutlet weak var toggle: UIButton!
     
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -43,25 +43,33 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         //let calendar = FSCalendar(frame: CGRect(x: 5, y: 30, width: view.frame.width-5, height: 100))
         calendar.dataSource = self
         calendar.delegate = self
+     //   tableView.delegate = self
+       // tableView.dataSource = self
         //calendar.scope = FSCalendarScope.week
         //view.addSubview(calendar)
         //self.calendar = calendar
-
-        
+       // calendar.layoutMargins.bottom = 5
+       // calendar.appearance.borderDefaultColor = UIColor.black
+        //self.calendar.frame.size.height = self.calendar.contentView.frame.size.height
+       // self.calendar.v
+        //view.setNeedsUpdateConstraints()
+        //view.updateConstraintsIfNeeded()
+        //view.setNeedsLayout()
+      //  self.view.layoutIfNeeded()
         //////
         
-        if UIDevice.current.model.hasPrefix("iPad") {
-            self.calendarHeightConstraint?.constant = 400
-        }
-        
-        self.calendar.select(Date())
-        
-        self.view.addGestureRecognizer(self.scopeGesture)
-        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+//        if UIDevice.current.model.hasPrefix("iPad") {
+//            self.calendarHeightConstraint?.constant = 400
+//        }
+//
+//        self.calendar.select(Date())
+//
+//        self.view.addGestureRecognizer(self.scopeGesture)
+//    //    self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         self.calendar.scope = .week
-        
-        // For UITest
-        self.calendar.accessibilityIdentifier = "calendar"
+//
+//        // For UITest
+//        self.calendar.accessibilityIdentifier = "calendar"
 
         
         
@@ -92,14 +100,22 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     }
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        self.calendarHeightConstraint?.constant = bounds.height
+       
+        self.calendar.frame.size.height = bounds.height
         self.view.layoutIfNeeded()
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print("did select date \(self.dateFormatter.string(from: date))")
-        let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
+       // print()
+        
+        //print("day of did select date \(daysName[calendar.gregorian.component(.weekday, from: date)])")
+        
+        
+        let  selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
         print("selected dates is \(selectedDates)")
+        
+        //print()
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
@@ -118,7 +134,6 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.white
     }
-    
     
     // MARK:- UITableViewDataSource
     
@@ -144,32 +159,17 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     
     // MARK:- UITableViewDelegate
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true)
 //        if indexPath.section == 0 {
 //            let scope: FSCalendarScope = (indexPath.row == 0) ? .month : .week
 //            //self.calendar.setScope(scope, animated: self.animationSwitch.isOn)
 //            self.calendar.setScope(scope, animated: true)
 //        }
-//    }
+    }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 10
-//    }
-    
-    // MARK:- Target actions
-    
-
-    @IBAction func toggleClicked(_ sender: Any) {
-        
-        if self.calendar.scope == .month {
-            //self.calendar.setScope(.week, animated: self.animationSwitch.isOn)
-            self.calendar.setScope(.week, animated: true)
-        } else {
-            //self.calendar.setScope(.month, animated: self.animationSwitch.isOn)
-            self.calendar.setScope(.month, animated: true)
-        }
-        
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
     }
     
 
