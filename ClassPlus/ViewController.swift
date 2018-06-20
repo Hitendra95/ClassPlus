@@ -50,6 +50,8 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         tableView.dataSource = self
         self.calendar.scope = .week
         tableView.reloadData()
+        //print("today date is : \(calendar.today)")
+        //print("today Date is \(self.dateFormatter.date(from: calendar.today))")
 
         
     }
@@ -128,11 +130,19 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     }
 
     }
-}
+ }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.white
     }
+    
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        //return self.dateFormatter.string(from: calendar.today!)
+        let todaysDate = dateFormatter.string(from: calendar.today!)
+        return dateFormatter.date(from: todaysDate)!
+    }
+        
+   
     
      // MARK:- UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
