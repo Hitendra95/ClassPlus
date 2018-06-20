@@ -21,7 +21,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     
     let dayNumber = ["Sunday":1,"Monday":2,"Tuesday":3,"Wednesdy":4,"Thursday":5,"Friday":6,"Saturday":7]
     
-    var selectedDayUrlInner = ["http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1829/42015969435_f670a930b8_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
+    var selectedDayUrlInner = ["http://farm2.staticflickr.com/1784/42925195191_07cd6b2506_s.jpg","http://farm2.staticflickr.com/1829/42015969435_f670a930b8_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
     var day = ""
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -49,6 +49,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         tableView.delegate = self
         tableView.dataSource = self
         self.calendar.scope = .week
+        tableView.reloadData()
 
         
     }
@@ -155,6 +156,14 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCellOfData
         cell.subjectName.text = "Chemistry Batch-02"
         cell.totalNumberOfClassCompleted.text = "Chemistry -07"
+        //MARK: Making corner Radius circular
+        cell.firstStudentImage.layer.cornerRadius = cell.firstStudentImage.frame.size.width/2
+        cell.firstStudentImage.clipsToBounds = true
+        cell.secondStudentImage.layer.cornerRadius = cell.secondStudentImage.frame.size.width/2
+        cell.secondStudentImage.clipsToBounds = true
+        cell.thirdStudentImage.layer.cornerRadius = cell.thirdStudentImage.frame.size.width/2
+        cell.thirdStudentImage.clipsToBounds = true
+        //
         print(selectedDayUrlOuter)
         let fetchArrayOuter = selectedDayUrlOuter[indexPath.row]
         //print("fetched Array outer\(fetchArrayOuter[0])")
