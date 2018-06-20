@@ -21,6 +21,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kaQ-2W-4kI" customClass="FSCalendar">
                                 <rect key="frame" x="0.0" y="34" width="375" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="bax-L4-Vc1"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMultipleSelection" value="YES"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
@@ -87,21 +90,21 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kaQ-2W-4kI" secondAttribute="bottom" constant="505" id="QTF-TK-hrt"/>
-                            <constraint firstItem="kaQ-2W-4kI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qpb-9c-ydi"/>
+                            <constraint firstItem="kaQ-2W-4kI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="34" id="6Mn-7Y-YOO"/>
+                            <constraint firstItem="kaQ-2W-4kI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PFo-TS-gPR"/>
                             <constraint firstItem="kaQ-2W-4kI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Val-yH-Bch"/>
-                            <constraint firstItem="kaQ-2W-4kI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="34" id="qgc-qh-Pga"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="calendar" destination="kaQ-2W-4kI" id="yKg-oV-2bC"/>
+                        <outlet property="calendarHeightConstraint" destination="bax-L4-Vc1" id="1x2-aJ-dkl"/>
                         <outlet property="tableView" destination="wSp-aa-JXw" id="or5-Ej-oxa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-991.20000000000005" y="7.6461769115442282"/>
+            <point key="canvasLocation" x="-1980" y="31"/>
         </scene>
     </scenes>
     <resources>
