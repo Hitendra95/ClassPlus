@@ -14,11 +14,9 @@ import SwiftyJSON
 
 class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,FSCalendarDelegateAppearance {
     
-//fileprivate weak var calendar: FSCalendar!
-
     let baseUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=04dd791b6393b0ab32b7105586cbf3bc&content_type=1&per_page=3&format=json&nojsoncallback=1&tags="
     
-    var studentImage = ["http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
+    var studentImageUrl = ["http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1829/42015969435_f670a930b8_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
 
     
     let daysName = [1:"Sunday",2:"Monday",3:"Tueday",4:"Wednesday",5:"Thursday",6:"Friday",7:"Saturday"]
@@ -180,7 +178,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
                     //self.urlToImageView(imageString)
                     print(imageString)
                     //self.studentImage.va = imageString[i]
-                        self.studentImage[i] = imageString
+                        self.studentImageUrl[i] = imageString
                     
                     }
                 
@@ -235,64 +233,56 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
         cell.subjectName.text = "Chemistry Batch-02"
         cell.totalNumberOfClassCompleted.text = "Chemistry -07"
         
-        
         //MARK: for Default wednesday selected day
         if noOfDaysSelected == 0
         {
-            let url = URL(string: studentImage[0])
-            if let imageData = try? Data(contentsOf: url!)
+            for i in 0...2
             {
-                if let image = UIImage(data: imageData)
+                if i == 0
                 {
-                    //DispatchQueue.main.async
-                    //{
-                    cell.firstStudentImage.image = image
-                    cell.secondStudentImage.image = image
-                    cell.thirdStudentImage.image = image
-                    
-                    cell.firstStudentImage.isHidden = false
+                    let url = URL(string: studentImageUrl[0])
+                    if let imageData = try? Data(contentsOf: url!)
+                    {
+                        if let image = UIImage(data: imageData)
+                        {
+                            cell.firstStudentImage.image = image
+                        }
                         
-                    //}
+                    }
+                    
                 }
-                
+                else if i == 1
+                {
+                    let url = URL(string: studentImageUrl[1])
+                    if let imageData = try? Data(contentsOf: url!)
+                    {
+                        if let image = UIImage(data: imageData)
+                        {
+                            cell.secondStudentImage.image = image
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    let url = URL(string: studentImageUrl[2])
+                    if let imageData = try? Data(contentsOf: url!)
+                    {
+                        if let image = UIImage(data: imageData)
+                        {
+                            cell.thirdStudentImage.image = image
+                        }
+                        
+                    }
+                }
             }
-        }
+                
+
+            }
+    
         //MARK: For selected date
         
-        
-        
-       // }
-//            print("getimage Data")
-//
-//            if imageData != nil
-//            {
-//                cell.firstStudentImage.image = UIImage(data: imageData! as Data)
-//                cell.secondStudentImage.image = UIImage(data: imageData! as Data)
-//                cell.thirdStudentImage.image = UIImage(data: imageData! as Data)
-//            }
-//
-//            else
-//            {
-//                print("unable to fetch image")
-//            }
-//
-   
-        
-        //let url = NSURL(string: studentImage[0])
-       // let imageData = NSData(contentsOf: url! as URL)
-//        if finalStudentData[0] != nil
-//        {
-//           cell.firstStudentImage.image = UIImage(data: finalStudentData[0])
-//        }
-        //cell.secondStudentImage.image = UIImage(data: finalStudentData[1])
-        //cell.thirdStudentImage.image = UIImage(data: finalStudentData[2])
-        
-        
-        
-        
-        //tableView.reloadData()
-//        cell.secondStudentImage.image = UIImage(named: studentImage[1])
-//        cell.thirdStudentImage.image = UIImage(named: studentImage[2])
+
         return cell
         
         
@@ -303,14 +293,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     }
     // MARK:- UITableViewDelegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if indexPath.section == 0 {
-//            let scope: FSCalendarScope = (indexPath.row == 0) ? .month : .week
-//            //self.calendar.setScope(scope, animated: self.animationSwitch.isOn)
-//            self.calendar.setScope(scope, animated: true)
-//        }
-    }
+
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
