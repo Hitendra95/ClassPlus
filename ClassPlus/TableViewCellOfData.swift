@@ -9,7 +9,7 @@
 import UIKit
 
 class TableViewCellOfData: UITableViewCell {
-
+    //MARK: All elements of a cell is comnnected to class TableViewCellOfData
     @IBOutlet weak var subjectName: UILabel!
     
     @IBOutlet weak var totalNumberOfClassCompleted: UILabel!

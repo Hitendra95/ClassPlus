@@ -12,81 +12,44 @@ import Alamofire
 import FlickrKit
 import SwiftyJSON
 
-class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource,FSCalendarDelegateAppearance {
+class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,UITableViewDelegate,UITableViewDataSource,FSCalendarDelegateAppearance {
     
+    //MARK:Initilize required variable for code
     let baseUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=04dd791b6393b0ab32b7105586cbf3bc&content_type=1&per_page=3&format=json&nojsoncallback=1&tags="
     
-    var studentImageUrl = ["http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1829/42015969435_f670a930b8_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
-
+    let daysName = [1:"Sunday",2:"Monday",3:"Tuesday",4:"Wednesday",5:"Thursday",6:"Friday",7:"Saturday"]
     
-    let daysName = [1:"Sunday",2:"Monday",3:"Tueday",4:"Wednesday",5:"Thursday",6:"Friday",7:"Saturday"]
     let dayNumber = ["Sunday":1,"Monday":2,"Tuesday":3,"Wednesdy":4,"Thursday":5,"Friday":6,"Saturday":7]
-    var noOfDaysSelected = 0
-    @IBOutlet weak var calendarHeightConstraint : NSLayoutConstraint?
-    @IBOutlet weak var calendar: FSCalendar!
-    @IBOutlet weak var tableView: UITableView!
     
+    var selectedDayUrlInner = ["http://farm2.staticflickr.com/1764/42857137572_7e31065226_s.jpg","http://farm2.staticflickr.com/1829/42015969435_f670a930b8_s.jpg","http://farm2.staticflickr.com/1731/41081933130_092662d181_s.jpg"]
     var day = ""
-    var finalStudentData = [Data]()
     
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
     }()
-    fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
-        [unowned self] in
-        let panGesture = UIPanGestureRecognizer(target: self.calendar, action: #selector(self.calendar.handleScopeGesture(_:)))
-        panGesture.delegate = self
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 2
-        return panGesture
-        }()
     
+    var selectedDayUrlOuter = [[String]()]
+    var noOfDaysSelected = 0
     
+    //MARK: Connect IBOutlet of ViewController view in This File
+    @IBOutlet weak var calendarHeightConstraint : NSLayoutConstraint?
+    @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var tableView: UITableView!
     
+    //MARK: View Did Load Function
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
+        selectedDayUrlOuter[0] = selectedDayUrlInner
+        
         calendar.dataSource = self
         calendar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-//
-//        for i in 0...2
-//        {
-//            let url = NSURL(string: studentImage[i])
-//            if let imageData = NSData(contentsOf: url! as URL)
-//            {
-//                finalStudentData[i] = imageData as Data
-//
-//            }
-//            else
-//            {
-//                print("unable to get image")
-//            }
-//
-//        }
-        tableView.reloadData()
-        //let url1 = NSURL(string: studentImage[0])
-//()
-        //////
-        
-//        if UIDevice.current.model.hasPrefix("iPad") {
-//            self.calendarHeightConstraint?.constant = 400
-//        }
-//
-//        self.calendar.select(Date())
-//
-//        self.view.addGestureRecognizer(self.scopeGesture)
-//    //    self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         self.calendar.scope = .week
-//
-//        // For UITest
-//        self.calendar.accessibilityIdentifier = "calendar"
 
-        
-        //calendar.contentView.sizeThatFits(calendar.frame.size)
         
     }
     
@@ -95,48 +58,24 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     }
     
     
-    ///
-    
-    // MARK:- UIGestureRecognizerDelegate
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        let shouldBegin = self.tableView.contentOffset.y <= -self.tableView.contentInset.top
-        if shouldBegin {
-            let velocity = self.scopeGesture.velocity(in: self.view)
-            switch self.calendar.scope {
-            case .month:
-                return velocity.y < 0
-            case .week:
-                return velocity.y > 0
-            }
-        }
-        return shouldBegin
-    }
-    
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
        
-       // self.calendar.frame.size.height = bounds.height
         self.calendarHeightConstraint?.constant = bounds.height
         self.view.layoutIfNeeded()
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print("did select date \(self.dateFormatter.string(from: date))")
-       // print()
-        
-        //print("day of did select date \(daysName[calendar.gregorian.component(.weekday, from: date)])")
-        day = daysName[calendar.gregorian.component(.weekday, from: date)]!
-        print(baseUrl+day)
-        
-        //fetchImagesFromApiServer(dayName: day)
-        fetchImagesFromApiServer(url: baseUrl, dayName: day)
-        
+       
         let  selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
         print("selected dates is \(selectedDates)")
         noOfDaysSelected = selectedDates.count
-        tableView.reloadData()
+        day = daysName[calendar.gregorian.component(.weekday, from: date)]!
+        print(baseUrl+day)
         
-        //print()
+        //fetchImagesFromApiServer
+        fetchImagesFromApiServer(url: baseUrl, dayName: day)
+        
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
@@ -162,25 +101,23 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
             {
                 print("response is : \(String(describing: response.result.value))")
                 if(response.data != nil){
-                    
+                
+                    //MARK: fetching 3 images of a particular day
                     for i in 0...2
                     {
-                        var json:JSON = JSON(response.data!)
-                        var innerJson:JSON = JSON(response.data!)
+                        let _:JSON = JSON(response.data!)
+                        let innerJson:JSON = JSON(response.data!)
+                        let farm:String = innerJson["photos"]["photo"][i]["farm"].stringValue
+                        let server:String = innerJson["photos"]["photo"][i]["server"].stringValue
+                        let photoID:String = innerJson["photos"]["photo"][i]["id"].stringValue
+                        let secret:String = innerJson["photos"]["photo"][i]["secret"].stringValue
+                        let imageString = "http://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_s.jpg"
                     
-                        var farm:String = innerJson["photos"]["photo"][i]["farm"].stringValue
-                        var server:String = innerJson["photos"]["photo"][i]["server"].stringValue
-                        var photoID:String = innerJson["photos"]["photo"][i]["id"].stringValue
-                    
-                        var secret:String = innerJson["photos"]["photo"][i]["secret"].stringValue
-                    
-                        var imageString = "http://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(secret)_s.jpg"
-                    //self.urlToImageView(imageString)
-                    print(imageString)
-                    //self.studentImage.va = imageString[i]
-                        self.studentImageUrl[i] = imageString
-                    
-                    }
+                        //print(imageString)
+                    self.selectedDayUrlInner[i] = imageString
+                     }
+                    self.selectedDayUrlOuter.append(self.selectedDayUrlInner)
+                   self.tableView.reloadData()
                 
             }
             else
@@ -192,95 +129,60 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     }
 }
     
-//    func fetchImage(imageStringUrl : String)
-//    {
-//        Alamofire.request(imageStringUrl, method: .get).responseJSON{
-//            response in
-//
-//
-//
-//
-//        }
-//
-//
-//    }
-    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         return calendar.gregorian.component(.weekday, from: date) == 4 ? UIColor.green : UIColor.white
     }
     
-    
-    // MARK:- UITableViewDataSource
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
-    
+     // MARK:- UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if noOfDaysSelected == 0
+        
+        //Todo : to online print data of 15 days
+
+        if selectedDayUrlOuter.count < 15
         {
-            return 1
+            return selectedDayUrlOuter.count
         }
         else
         {
-            return noOfDaysSelected + 1
+            return 15
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-          let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCellOfData
+        //MARK: Initilizing value of cell in a table view
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCellOfData
         cell.subjectName.text = "Chemistry Batch-02"
         cell.totalNumberOfClassCompleted.text = "Chemistry -07"
-        
-        //MARK: for Default wednesday selected day
-        if noOfDaysSelected == 0
+        print(selectedDayUrlOuter)
+        let fetchArrayOuter = selectedDayUrlOuter[indexPath.row]
+        //print("fetched Array outer\(fetchArrayOuter[0])")
+        for i in 0...2
         {
-            for i in 0...2
+            if let url = URL(string: String(fetchArrayOuter[i]))
             {
-                if i == 0
+                if let imageData = try? Data(contentsOf: url)
                 {
-                    let url = URL(string: studentImageUrl[0])
-                    if let imageData = try? Data(contentsOf: url!)
+                    if let image = UIImage(data: imageData)
                     {
-                        if let image = UIImage(data: imageData)
+                        if i==0
                         {
                             cell.firstStudentImage.image = image
                         }
-                        
-                    }
-                    
-                }
-                else if i == 1
-                {
-                    let url = URL(string: studentImageUrl[1])
-                    if let imageData = try? Data(contentsOf: url!)
-                    {
-                        if let image = UIImage(data: imageData)
+                        else if i==1
                         {
                             cell.secondStudentImage.image = image
                         }
-                        
-                    }
-                }
-                else
-                {
-                    let url = URL(string: studentImageUrl[2])
-                    if let imageData = try? Data(contentsOf: url!)
-                    {
-                        if let image = UIImage(data: imageData)
+                        else
                         {
                             cell.thirdStudentImage.image = image
                         }
-                        
                     }
                 }
             }
-                
-
-            }
-    
-        //MARK: For selected date
+            
+        }
         
 
         return cell
@@ -291,10 +193,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,U
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-    // MARK:- UITableViewDelegate
-    
-
-    
+   
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
